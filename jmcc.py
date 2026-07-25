@@ -197,8 +197,8 @@ def fix_type(thing):
 
 def download_latest_release(reload=False):
     global data, an_data
-    url = requests.get("https://api.github.com/repos/donzgold/JustMC_compilator/releases/latest").json()["assets"][-1][
-        "browser_download_url"]
+    assets = requests.get("https://api.github.com/repos/Deolure/JMCC/releases/latest").json()["assets"]
+    url = next(a["browser_download_url"] for a in assets if a["name"] == "release.zip")
     filereq = requests.get(url, stream=True)
     open("release.zip", "wb").write(filereq.content)
     if os.path.isfile("jmcc.properties"):
@@ -227,7 +227,7 @@ def download_latest_release(reload=False):
 
 def download_latest_version(reload=False):
     global data, an_data
-    filereq = requests.get('https://raw.githubusercontent.com/donzgold/JustMC_compilator/master/release.zip')
+    filereq = requests.get('https://raw.githubusercontent.com/Deolure/JMCC/main/release.zip')
     open("release.zip", "wb").write(filereq.content)
     if os.path.isfile("jmcc.properties"):
         with zipfile.ZipFile(f"release.zip", "a") as z:
@@ -257,11 +257,11 @@ def download_latest_data():
     if not os.path.isdir("data"):
         os.mkdir("data")
     open("data/actions.json", "w+").write(
-        requests.get('https://raw.githubusercontent.com/donzgold/JustMC_compilator/master/data/actions.json').text)
+        requests.get('https://raw.githubusercontent.com/Deolure/JMCC/main/data/actions.json').text)
     open("data/events.json", "w+").write(
-        requests.get('https://raw.githubusercontent.com/donzgold/JustMC_compilator/master/data/events.json').text)
+        requests.get('https://raw.githubusercontent.com/Deolure/JMCC/main/data/events.json').text)
     open("data/values.json", "w+").write(
-        requests.get('https://raw.githubusercontent.com/donzgold/JustMC_compilator/master/data/values.json').text)
+        requests.get('https://raw.githubusercontent.com/Deolure/JMCC/main/data/values.json').text)
     data["data_version"] = an_data["data_version"]
     data.save_properties(open("jmcc.properties", "w+", encoding="UTF-8"))
     print(minecraft_based_text("&f" + translate("jmcc.download.last_data")))
@@ -270,7 +270,7 @@ def download_latest_data():
 def check_updates():
     global data, an_data
     an_data = Properties(text=requests.get(
-        'https://raw.githubusercontent.com/donzgold/JustMC_compilator/master/jmcc.properties').text)
+        'https://raw.githubusercontent.com/Deolure/JMCC/main/jmcc.properties').text)
     if data["check_beta_versions"] and (data["release_version"] < an_data["release_version"]):
         print(minecraft_based_text("&6" + translate("warning.jmcc_release_version.is_not_last",
                                                     {0: an_data['release_version'] - data['release_version']})))
@@ -356,7 +356,7 @@ if __name__ == "__main__":
         elif additional[0] == "update" and len(additional) > 1:
             if additional[1] == "data":
                 an_data = Properties(text=requests.get(
-                    'https://raw.githubusercontent.com/donzgold/JustMC_compilator/master/jmcc.properties').text)
+                    'https://raw.githubusercontent.com/Deolure/JMCC/main/jmcc.properties').text)
                 download_latest_data()
             elif additional[1] == "to_release":
                 download_latest_release(reload=False)
